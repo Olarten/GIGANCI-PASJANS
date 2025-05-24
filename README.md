@@ -1,3 +1,6 @@
+ABY UŻYĆ KODU WYMAGANA JEST BIBLIOTEKA .NET. MOŻNA JĄ POBRAĆ TUTAJ: https://aka.ms/dotnet/download
+
+
 Instrukcja odpalenia programu: Aby otworzyć program, należy otworzyć plik nazwany Pasjans.bat
 Cały kod można znaleźć w folderze pasjans repozytorium
 
