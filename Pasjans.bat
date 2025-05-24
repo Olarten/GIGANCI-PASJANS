@@ -14,37 +14,48 @@ if %ERRORLEVEL% NEQ 0 (
     if exist dotnet-installer.exe (
         echo Running .NET SDK installer...
         start /wait dotnet-installer.exe
-        
-        REM After installation, clean up
+
+        REM Check again for dotnet
+        where dotnet >nul 2>nul
+        if %ERRORLEVEL% NEQ 0 (
+            echo.
+            echo Installation finished, but dotnet is still not found.
+            echo You may need to restart your computer or log out and log in again.
+            echo Alternatively, check if the dotnet folder is in your PATH environment variable.
+            pause
+            exit /b 1
+        )
+
         del dotnet-installer.exe
     ) else (
-        echo Failed to download .NET SDK installer. Please install it manually from https://dotnet.microsoft.com/download
+        echo Failed to download .NET SDK installer.
         pause
         exit /b 1
     )
 )
 
-REM Verify again if dotnet is now available
-where dotnet >nul 2>nul
+REM Restore dependencies
+echo Restoring dependencies...
+dotnet restore
 if %ERRORLEVEL% NEQ 0 (
-    echo .NET SDK installation failed or was not completed.
+    echo Failed to restore dependencies. Make sure the SDK is properly installed.
     pause
     exit /b 1
 )
 
-REM Restore dependencies
-echo Restoring dependencies...
-dotnet restore
-
 REM Build the project
 echo Building project...
 dotnet build --configuration Release
+if %ERRORLEVEL% NEQ 0 (
+    echo Build failed!
+    pause
+    exit /b 1
+)
 
 REM Run the game
 echo Starting the game...
 echo.
 
-REM Navigate to project folder (adjust if needed)
 if exist Pasjans (
     cd Pasjans
     dotnet run
