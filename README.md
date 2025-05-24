@@ -1,4 +1,4 @@
-ABY UŻYĆ KODU WYMAGANA JEST BIBLIOTEKA .NET. MOŻNA JĄ POBRAĆ TUTAJ: https://aka.ms/dotnet/download
+ABY UŻYĆ KODU WYMAGANA JEST BIBLIOTEKA .NET - w wersji 9.0 . MOŻNA JĄ POBRAĆ TUTAJ: https://aka.ms/dotnet/download
 
 
 Instrukcja odpalenia programu: Aby otworzyć program, należy otworzyć plik nazwany Pasjans.bat
