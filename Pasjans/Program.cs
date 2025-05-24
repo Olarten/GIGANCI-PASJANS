@@ -1,4 +1,4 @@
-﻿//Niektóre informacje dla jasności;
+//Niektóre informacje dla jasności;
 //Do niektórych bibliotek spytałem się sztucznej inteligencji, jak działają oraz aby podała ich zastosowania w pasjansie
 //Niektóre moje notatki da się znaleźć na dole kodu.
 
@@ -217,7 +217,7 @@ namespace Pasjans
                                 {
                                     sourceColumn[^1].IsReversed = false;
                                 }
-                                plansza.DrawTable(selectedCards); // Redraw immediately after move
+                                plansza.DrawTable(selectedCards);
                                 AnsiConsole.MarkupLine("\n[green]Udało się przełożyć kartę do podstawy![/]");
                             }
                             else
@@ -225,7 +225,9 @@ namespace Pasjans
                                 AnsiConsole.MarkupLine("\n[red]Ten ruch jest niemożliwy![/]");
                             }
                         }
-                        isFirstSelection = true;
+                        isFirstSelection = true; 
+                        currentColumn = firstSelectedColumn;
+                        firstSelectedColumn = -1; 
                     }
                     AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
                     Console.ReadKey(true);
