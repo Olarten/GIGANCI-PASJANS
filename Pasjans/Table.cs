@@ -51,10 +51,16 @@ public class Plansza
         {
             if (i == Program.currentColumn)
                 AnsiConsole.Markup($"[black on cyan] {i + 1} [/]  ");
+            else if (i == Program.firstSelectedColumn && !Program.isFirstSelection)
+                AnsiConsole.Markup($"[black on orange1] {i + 1} [/]  ");
             else
                 AnsiConsole.Markup($"[grey] {i + 1} [/]  ");
         }
-        if (Program.currentColumn == 7)
+        if (Program.firstSelectedColumn == 7 && !Program.isFirstSelection)
+        {
+            AnsiConsole.Markup($"[black on orange1] Talia [/]  ");
+        }
+        else if (Program.currentColumn == 7)
         {
             AnsiConsole.Markup($"[black on cyan] Talia [/]  ");
         }
@@ -63,7 +69,11 @@ public class Plansza
             AnsiConsole.Markup($"[grey] Talia [/]  ");
         }
 
-        if (Program.currentColumn == 8)
+        if (Program.firstSelectedColumn == 8 && !Program.isFirstSelection)
+        {
+            AnsiConsole.Markup($"[black on orange1] Podstawy [/]  ");
+        }
+        else if (Program.currentColumn == 8)
         {
             AnsiConsole.Markup($"[black on cyan] Podstawy [/]  ");
         }

@@ -16,7 +16,6 @@ namespace Pasjans
         static int deckRepeatCount = 0; // Licznik przetasowań talii
         public static int currentColumn = 0; // Aktualnie wybrana kolumna
         static int totalColumns = 9;  // Całkowita liczba kolumn (7 na karty + talia + podstawy)
-        static int currentClickedCollumn; // Zapamiętana kolumna po pierwszym kliknięciu
 
         // Deklaracje list przechowujących karty
         public static List<Card> deck = Cards.GetDeck(); // Główna talia 52 kart
@@ -39,8 +38,8 @@ namespace Pasjans
         static List<Card> foundation4 = new List<Card>(); // Podstawa na pik (♠)
 
         // Zmienne do obsługi wyboru kolumn
-        static int firstSelectedColumn = -1; // Indeks pierwszej wybranej kolumny
-        static bool isFirstSelection = true; // Flaga pierwszego wyboru
+        public static int firstSelectedColumn = -1; // Indeks pierwszej wybranej kolumny
+        public static bool isFirstSelection = true; // Flaga pierwszego wyboru
         // Główna pętla gry
         static void Main(string[] args)
         {
@@ -109,12 +108,11 @@ namespace Pasjans
                     if (isFirstSelection)
                     {
                         firstSelectedColumn = currentColumn;
-                        currentClickedCollumn = currentColumn + 1;
                         AnsiConsole.MarkupLine($"\n[green]Wybrano kolumnę {currentColumn + 1}![/]");
                         AnsiConsole.MarkupLine("[grey]Wybierz drugą kolumnę[/]");
                         isFirstSelection = false;
                         AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                        Console.ReadKey(true);
+                       
                     }
                     else 
                     {
@@ -135,18 +133,14 @@ namespace Pasjans
                 }
                 else if (key.Key == ConsoleKey.Enter && currentColumn == 7)
                 {
-                    if (SelectedDrawnDeck.Count == 0)
+                    if (isFirstSelection)
                     {
-                        AnsiConsole.MarkupLine("\n[red]Brak kart w talii![/]");
-                        AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                        Console.ReadKey(true);
-                        continue;
+                        firstSelectedColumn = 7;
+                        isFirstSelection = false;
                     }
 
-                    AnsiConsole.MarkupLine($"\n[green]Wybrano kartę z talii![/]");
-                    AnsiConsole.MarkupLine("[grey](Wybierz kolumnę docelową lub podstawę)[/]");
-                    
                     var key2 = Console.ReadKey(true);
+                    bool cancelled = false;
                     while (key2.Key != ConsoleKey.Enter)
                     {
                         if (key2.Key == ConsoleKey.LeftArrow || key2.Key == ConsoleKey.RightArrow)
@@ -166,9 +160,20 @@ namespace Pasjans
                                     currentColumn = 0;
                             }
                             plansza.DrawTable(selectedCards);
-                            key2 = Console.ReadKey(true);
                         }
+                        else if (key2.Key == ConsoleKey.Escape)
+                        {
+                            // Anuluj wybór i wyjdź z pętli
+                            isFirstSelection = true;
+                            firstSelectedColumn = -1;
+                            cancelled = true;
+                            break;
+                        }
+                        key2 = Console.ReadKey(true);
                     }
+
+                    if (cancelled)
+                        continue;
 
                     if (currentColumn == 8)
                     {
@@ -197,7 +202,11 @@ namespace Pasjans
                             AnsiConsole.MarkupLine("\n[red]Ten ruch jest niemożliwy![/]");
                         }
                     }
-                    
+
+                    // RESET SELECTION STATE HERE:
+                    isFirstSelection = true;
+                    firstSelectedColumn = -1;
+
                     AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
                     Console.ReadKey(true);
                 }
@@ -217,7 +226,7 @@ namespace Pasjans
                                 {
                                     sourceColumn[^1].IsReversed = false;
                                 }
-                                plansza.DrawTable(selectedCards); // Redraw immediately after move
+                                plansza.DrawTable(selectedCards);
                                 AnsiConsole.MarkupLine("\n[green]Udało się przełożyć kartę do podstawy![/]");
                             }
                             else
@@ -225,7 +234,9 @@ namespace Pasjans
                                 AnsiConsole.MarkupLine("\n[red]Ten ruch jest niemożliwy![/]");
                             }
                         }
-                        isFirstSelection = true;
+                        isFirstSelection = true; 
+                        currentColumn = firstSelectedColumn;
+                        firstSelectedColumn = -1; 
                     }
                     AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
                     Console.ReadKey(true);
@@ -241,18 +252,14 @@ namespace Pasjans
                         deck.RemoveAt(randomIndex);
                         SelectedDrawnDeck.Add(drawnCard);
                         plansza.DrawTable(selectedCards); // Natychmiastowe odświeżenie planszy
-                        AnsiConsole.MarkupLine("\n[green]Dobrano kartę![/]");
-                        AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                        Console.ReadKey(true);
+
                     }
                     else if (deck.Count > 0 && deckRepeatCount >= 1)
                     {
                         SelectedDrawnDeck.Add(deck[0]);
                         deck.RemoveAt(0);
                         plansza.DrawTable(selectedCards); // Natychmiastowe odświeżenie planszy
-                        AnsiConsole.MarkupLine("\n[green]Dobrano kartę![/]");
-                        AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                        Console.ReadKey(true);
+                       
                     }
                     else
                     {
@@ -288,7 +295,6 @@ namespace Pasjans
             // Resetowanie zmiennych stanu gry
             deckRepeatCount = 0;
             currentColumn = 0;
-            currentClickedCollumn = 0;
             firstSelectedColumn = -1;
             isFirstSelection = true;
 
