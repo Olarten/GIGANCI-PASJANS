@@ -1,4 +1,4 @@
-﻿//Niektóre informacje dla jasności;
+//Niektóre informacje dla jasności;
 //Do niektórych bibliotek spytałem się sztucznej inteligencji, jak działają oraz aby podała ich zastosowania w pasjansie
 //Niektóre moje notatki da się znaleźć na dole kodu.
 
