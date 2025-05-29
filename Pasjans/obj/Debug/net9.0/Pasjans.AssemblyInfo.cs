@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pasjans")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d80a9ccc14f57d65206e4971335dfaf4b6dc599c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7f25bf01a0ea32c1c4cbb0a82342fa60923a33e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pasjans")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pasjans")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

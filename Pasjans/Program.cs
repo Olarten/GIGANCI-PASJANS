@@ -122,12 +122,13 @@ namespace Pasjans
                         {
                             AnsiConsole.MarkupLine("\n[green]Udało się przełożyć karty![/]");
                         }
-                        else 
+                        else
                         {
                             AnsiConsole.MarkupLine("\n[red]Ten ruch jest niemożliwy![/]");
+                            AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
+                            Console.ReadKey(true);
                         }
-                        AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                        Console.ReadKey(true);
+
                         isFirstSelection = true;
                     }
                 }
@@ -181,8 +182,7 @@ namespace Pasjans
                         if (moved)
                         {
                             SelectedDrawnDeck.RemoveAt(SelectedDrawnDeck.Count - 1);
-                            plansza.DrawTable(selectedCards); // Redraw immediately after move
-                            AnsiConsole.MarkupLine("\n[green]Udało się przełożyć kartę do podstawy![/]");
+                            plansza.DrawTable(selectedCards); 
                         }
                         else
                         {
@@ -192,7 +192,7 @@ namespace Pasjans
                     else if (currentColumn < 7)
                     {
                         bool moved = CardMoving.TryMoveFromDeckToColumn(currentColumn, SelectedDrawnDeck);
-                        plansza.DrawTable(selectedCards); // Redraw immediately after move
+                        plansza.DrawTable(selectedCards);
                         if (moved)
                         {
                             AnsiConsole.MarkupLine("\n[green]Udało się przełożyć kartę![/]");
@@ -200,15 +200,14 @@ namespace Pasjans
                         else
                         {
                             AnsiConsole.MarkupLine("\n[red]Ten ruch jest niemożliwy![/]");
+                            AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
+                            Console.ReadKey(true);
                         }
                     }
 
-                    // RESET SELECTION STATE HERE:
+                    
                     isFirstSelection = true;
                     firstSelectedColumn = -1;
-
-                    AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                    Console.ReadKey(true);
                 }
                 else if (key.Key == ConsoleKey.Enter && currentColumn == 8)
                 {
@@ -227,19 +226,19 @@ namespace Pasjans
                                     sourceColumn[^1].IsReversed = false;
                                 }
                                 plansza.DrawTable(selectedCards);
-                                AnsiConsole.MarkupLine("\n[green]Udało się przełożyć kartę do podstawy![/]");
                             }
                             else
                             {
                                 AnsiConsole.MarkupLine("\n[red]Ten ruch jest niemożliwy![/]");
+                                AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
+                                Console.ReadKey(true);
                             }
                         }
                         isFirstSelection = true; 
                         currentColumn = firstSelectedColumn;
                         firstSelectedColumn = -1; 
                     }
-                    AnsiConsole.MarkupLine("[grey](Naciśnij dowolny klawisz, aby kontynuować)[/]");
-                    Console.ReadKey(true);
+
                 }
                 else if (key.Key == ConsoleKey.D)
                 {
